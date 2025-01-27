@@ -342,6 +342,7 @@ class ZCLSensorMetadata(EntityMetadata):
     """Metadata for exposed ZCL attribute based sensor entity."""
 
     attribute_name: str | None = attrs.field(default=None)
+    attribute_converter: typing.Callable[[Any], Any] | None = attrs.field(default=None)
     reporting_config: ReportingConfig | None = attrs.field(default=None)
     divisor: int | None = attrs.field(default=None)
     multiplier: int | None = attrs.field(default=None)
@@ -382,6 +383,7 @@ class BinarySensorMetadata(EntityMetadata):
     """Metadata for exposed binary sensor entity."""
 
     attribute_name: str = attrs.field()
+    attribute_converter: typing.Callable[[Any], Any] | None = attrs.field(default=None)
     reporting_config: ReportingConfig | None = attrs.field(default=None)
     device_class: BinarySensorDeviceClass | None = attrs.field(default=None)
 
@@ -804,6 +806,7 @@ class QuirkBuilder:
         unit: str | None = None,
         initially_disabled: bool = False,
         attribute_initialized_from_cache: bool = True,
+        attribute_converter: typing.Callable[[Any], Any] | None = None,
         reporting_config: ReportingConfig | None = None,
         translation_key: str | None = None,
         fallback_name: str | None = None,
@@ -825,6 +828,7 @@ class QuirkBuilder:
                 translation_key=translation_key,
                 fallback_name=fallback_name,
                 attribute_name=attribute_name,
+                attribute_converter=attribute_converter,
                 divisor=divisor,
                 multiplier=multiplier,
                 unit=unit,
@@ -935,6 +939,7 @@ class QuirkBuilder:
         device_class: BinarySensorDeviceClass | None = None,
         initially_disabled: bool = False,
         attribute_initialized_from_cache: bool = True,
+        attribute_converter: typing.Callable[[Any], Any] | None = None,
         reporting_config: ReportingConfig | None = None,
         translation_key: str | None = None,
         fallback_name: str | None = None,
@@ -956,6 +961,7 @@ class QuirkBuilder:
                 translation_key=translation_key,
                 fallback_name=fallback_name,
                 attribute_name=attribute_name,
+                attribute_converter=attribute_converter,
                 device_class=device_class,
             )
         )
